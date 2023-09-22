@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Send Custom Message and File via Telegram Bot</title>
+</head>
+<body>
+    <h2>Send Custom Message and File via Telegram Bot</h2>
+
+    <!-- HTML form to collect user input -->
+    <form id="telegramForm" enctype="multipart/form-data">
+        <label for="message">Message:</label>
+        <input type="text" name="message" id="message"><br><br>
+
+        <label for="file">File:</label>
+        <input type="file" name="file" id="file"><br><br>
+
+        <input type="submit" value="Send Message and File">
+    </form>
+
+    <div id="response"></div>
+
+    <script>
+        // JavaScript function to send a custom message and file via Telegram bot
+        document.getElementById("telegramForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const message = document.getElementById("message").value;
+            const botToken = '6368679931:AAGBosL7cET0uhyQKlxtqDBAPY4Xd3bqyP4'; // Replace with your Telegram bot token
+            const chatId = '5114789651'; // Replace with your chat ID
+
+            // Create a FormData object to include the file
+            const formData = new FormData();
+            formData.append('chat_id', chatId);
+            formData.append('text', message);
+            formData.append('document', document.getElementById("file").files[0]);
+
+            // Send the message and file to Telegram bot API
+            fetch(`https://api.telegram.org/bot${botToken}/sendDocument`, {
+                method: 'POST',
+                body: formData,
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("response").textContent = `Message and File sent: ${data.ok}`;
+                })
+                .catch(error => {
+                    document.getElementById("response").textContent = `Error: ${error.message}`;
+                });
+        });
+    </script>
+</body>
+</html>
