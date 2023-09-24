@@ -1,7 +1,73 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Send Custom Message and File via Telegram Bot</title>
+    <style>
+        /* Apply styles to the entire body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* Apply styles to the heading (h2) */
+h2 {
+    color: #333;
+}
+
+/* Apply styles to labels */
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Apply styles to input fields */
+input[type="text"],
+input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Apply styles to the loading spinner */
+.loading {
+    display: none;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.loading::after {
+    content: "";
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 2s linear infinite;
+    display: inline-block;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Apply styles to the response div */
+#response {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+    </style>
 </head>
 <body>
     <h2>Send Custom Message and File via Telegram Bot</h2>
@@ -14,6 +80,9 @@
         <label for="file">File:</label>
         <input type="file" name="file" id="file"><br><br>
 
+        <!-- Loading indicator -->
+        <div class="loading" id="loading"></div>
+
         <input type="submit" value="Send Message and File">
     </form>
 
@@ -23,6 +92,9 @@
         // JavaScript function to send a custom message and file via Telegram bot
         document.getElementById("telegramForm").addEventListener("submit", function(event) {
             event.preventDefault();
+
+            // Show loading indicator
+            document.getElementById("loading").style.display = "inline-block";
 
             const message = document.getElementById("message").value;
             const botToken = '6368679931:AAGBosL7cET0uhyQKlxtqDBAPY4Xd3bqyP4'; // Replace with your Telegram bot token
@@ -41,9 +113,15 @@
             })
                 .then(response => response.json())
                 .then(data => {
+                    // Hide loading indicator
+                    document.getElementById("loading").style.display = "none";
+
                     document.getElementById("response").textContent = `Message and File sent: ${data.ok}`;
                 })
                 .catch(error => {
+                    // Hide loading indicator
+                    document.getElementById("loading").style.display = "none";
+
                     document.getElementById("response").textContent = `Error: ${error.message}`;
                 });
         });
