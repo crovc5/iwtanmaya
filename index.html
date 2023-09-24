@@ -1,130 +1,532 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Send Custom Message and File via Telegram Bot</title>
-    <style>
-        /* Apply styles to the entire body */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:b="http://www.google.com/2005/gml/b" xmlns:data="http://www.google.com/2005/gml/data" xmlns:expr="http://www.google.com/2005/gml/expr" lang="en">
+  <head>
+	<!--meta Data start-->
+<meta charset="utf-8"/>
+<meta name="keywords" content="IW TANMAYA"/>
+<meta name="author" content="IW TANMAYA"/>
+<meta name="description" content="IW TANMAYA"/>
+<meta name="viewport" content="width=device-width,initia-scale=1"/>
+<title>IW TANMAYA</title>
+<link rel="icon" type="image/x-icon" href="img2.jpg">
+<link rel="stylesheet" href="https://iwtanmaya.github.io/iwtanmaya/booster.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" href="bootstrap.min.css"/>
+<!--meta data end-->
 
-/* Apply styles to the heading (h2) */
-h2 {
-    color: #333;
-}
-
-/* Apply styles to labels */
-label {
-    display: block;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-/* Apply styles to input fields */
-input[type="text"],
-input[type="file"] {
+<!--style start-->
+<b:skin>
+ <![CDATA[ ]]>
+</b:skin>
+<style>
+*{box-sizing: border-box;margin: 0;padding: 0;}
+html,body {
+    background-color: white;
+    font-family: inherit;
     width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    height: 100%;
+  animation: fadeInAnimation ease 3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  /*background-color: #dadada;*/
+  background-color: #d8dee3;
+  color: #a0a5a8;
 }
-
-/* Apply styles to the loading spinner */
-.loading {
-    display: none;
-    text-align: center;
-    margin: 20px 0;
+a,input,textarea{
+	outline: none;
+	text-decoration: none;
 }
-
-.loading::after {
-    content: "";
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #3498db;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    animation: spin 2s linear infinite;
-    display: inline-block;
+@keyframes fadeInAnimation {
+ 0% {
+opacity: 0;
 }
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+100% {
+opacity: 1;
+ }
 }
-
-/* Apply styles to the response div */
-#response {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.headr67 .iamtype1 {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: inline;
+  top:28%;
+  left: 80px%;
+  width: 70%;
 }
-    </style>
+.headr67 .iamtype1 h1{color: #000000;}
+.txt-rotate {
+  font-size: 24px;
+  font-weight: bold;
+  color: #007BFF; /* Change the color to your preference */
+  animation: rotateText 8s linear infinite; /* Adjust the animation duration as needed */
+}
+@keyframes rotateText {
+  0% {
+    content: "Photographer.";
+  }
+  25% {
+    content: "Editor.";
+  }
+  50% {
+    content: "Web Developer.";
+  }
+  75% {
+    content: "App Developer.";
+  }
+  100% {
+    content: "Photographer."; /* Repeat the first text to create a seamless loop */
+  }
+}
+.headr67{
+	
+}
+.headr67 .background-top-img{
+  position: relative;
+  text-align: center;
+  color: white;
+}
+.headr67 img{
+height: 100vh;
+width: 100vw;
+object-fit: cover;
+top: 0;
+left: 0;
+z-index: -999;
+}
+.main-content67{
+	padding: 2px;
+	margin: 10px;
+}
+.footer-67{
+ background: #585858;
+ width: 100%;
+ padding: 20px;
+ background-color: rgb(21, 21, 32);
+}
+#snackbar {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+  font-size: 17px;
+}
+#snackbar.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;} 
+  to {bottom: 30px; opacity: 1;}
+}
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;} 
+  to {bottom: 0; opacity: 0;}
+}
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+.contact-Us-67 {
+	border: 2px solid rad;
+	padding: 20px;
+}
+.contact-Us-67 form input{
+	width: 100%;
+	padding: 10px;
+	margin: 5px 0;
+	border: 1px solid #ccc;
+	border-radius: 5px; 
+	font-size: 16px;
+	letter-spacing: .15px; 
+	border: none; outline: none; 
+	font-family: 'Montserrat', sans-serif;
+	background-color: #ecf0f3;
+	transition: .25s ease;
+	border-radius: 8px;
+	box-shadow: inset 2px 2px 4px #d1d9e6, inset -2px -2px 4px #f9f9f9;
+}
+.contact-Us-67 form textarea{
+	width: 100%;height: 100px;
+	padding: 10px;
+	margin: 5px 0;
+	border: 1px solid #ccc;
+	border-radius: 5px; 
+	font-size: 16px;
+	letter-spacing: .15px; 
+	border: none; outline: none; 
+	font-family: 'Montserrat', sans-serif;
+	background-color: #ecf0f3;
+	transition: .25s ease;
+	resize: none;
+	border-radius: 8px;
+	box-shadow: inset 2px 2px 4px #d1d9e6, inset -2px -2px 4px #f9f9f9;
+}
+.contact-Us-67 form button{
+	width: 100%; height: 50px;
+  border-radius: 25px;
+  margin-top: 20px;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1.15px;
+  background-color: #ff003d;
+  color: #f9f9f9;
+  border: none;
+  outline: none;
+}
+.footer-distributed{
+	background-color: #292c2f;
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+	box-sizing: border-box;
+	width: 100%;
+	text-align: left;
+	font: bold 16px sans-serif;
+	padding: 55px 50px;
+	margin-top: 80px;
+}
+ 
+.footer-distributed .footer-left,
+.footer-distributed .footer-center,
+.footer-distributed .footer-right{
+	display: inline-block;
+	vertical-align: top;
+}
+ 
+.footer-distributed .footer-left{
+	width: 40%;
+}
+ 
+.footer-distributed h3{
+	color:  #ffffff;
+	font: normal 36px 'Cookie', cursive;
+	margin: 0;
+}
+ 
+.footer-distributed h3 span{
+	color:  #5383d3;
+}
+ 
+ 
+.footer-distributed .footer-links{
+	color:  #ffffff;
+	margin: 20px 0 12px;
+	padding: 0;
+}
+ 
+.footer-distributed .footer-links a{
+	display:inline-block;
+	line-height: 1.8;
+	text-decoration: none;
+	color:  inherit;
+}
+ 
+.footer-distributed .footer-company-name{
+	color:  #8f9296;
+	font-size: 14px;
+	font-weight: normal;
+	margin: 0;
+}
+ 
+ 
+.footer-distributed .footer-center{
+	width: 35%;
+}
+ 
+.footer-distributed .footer-center i{
+	background-color:  #33383b;
+	color: #ffffff;
+	font-size: 25px;
+	width: 38px;
+	height: 38px;
+	border-radius: 50%;
+	text-align: center;
+	line-height: 42px;
+	margin: 10px 15px;
+	vertical-align: middle;
+}
+ 
+.footer-distributed .footer-center i.fa-envelope{
+	font-size: 17px;
+	line-height: 38px;
+}
+ 
+.footer-distributed .footer-center p{
+	display: inline-block;
+	color: #ffffff;
+	vertical-align: middle;
+	margin:0;
+}
+ 
+.footer-distributed .footer-center p span{
+	display:block;
+	font-weight: normal;
+	font-size:14px;
+	line-height:2;
+}
+ 
+.footer-distributed .footer-center p a{
+	color:  #5383d3;
+	text-decoration: none;;
+}
+ 
+.footer-distributed .footer-right{
+	width: 20%;
+}
+.footer-distributed .footer-company-about{
+	line-height: 20px;
+	color:  #92999f;
+	font-size: 13px;
+	font-weight: normal;
+	margin: 0;
+}
+.footer-distributed .footer-company-about span{
+	display: block;
+	color:  #ffffff;
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+.footer-distributed .footer-icons{
+	margin-top: 25px;
+}
+.footer-distributed .footer-icons a{
+	display: inline-block;
+	width: 35px;
+	height: 35px;
+	cursor: pointer;
+	background-color:  #33383b;
+	border-radius: 2px;
+	font-size: 20px;
+	color: #ffffff;
+	text-align: center;
+	line-height: 35px;
+	margin-right: 3px;
+	margin-bottom: 5px;
+}
+@media (max-width: 880px) {
+	.footer-distributed{
+		font: bold 14px sans-serif;
+	
+	}
+	.footer-distributed .footer-left,
+	.footer-distributed .footer-center,
+	.footer-distributed .footer-right{
+		display: block;
+		width: 100%;
+		margin-bottom: 40px;
+		text-align: center;
+	}
+ 
+	.footer-distributed .footer-center i{
+		margin-left: 0;
+	}
+}
+@media screen and (max-width: 992px) {
+.headr67 .iamtype1{top:80%;left: 55%;}
+}
+</style>
+<!--style end-->
 </head>
-<body>
-    <h2>Send Custom Message and File via Telegram Bot</h2>
+<body exper:class='data:blog.pageType'>
+<div class="headr67" id="home">
 
-    <!-- HTML form to collect user input -->
-    <form id="telegramForm" enctype="multipart/form-data">
-        <label for="message">Message:</label>
-        <input type="text" name="message" id="message"><br><br>
+<div class="background-img-top">
+ <img src="background-img.png" class="card-img-1 img-fluid" alt="background-img"/>
+ <div class="iamtype1">
+<h1>I Am
+  <span class="txt-rotate" data-period="2000" data-rotate='["Photographer.","Editor.", "Web Developer.", "App Developer."]'></span></h1>
+  </div>
+</div>
+</div>
+<!--headr end-->
+<hr/>
+<!--Main start-->
+<div class="main-content67 p-2">
+<div class="row">
+<div class="col-sm-6">
+<p class="text-body">It was a lovely display of seam bowling from Mohammed Siraj. Just accurate outswinger and accurate outswinger at high pace. A couple of them even seamed in after pitching to get Sadeera Samarawickrama and Kusal Mendis. These were not wobble-seam balls. Siraj said this was the most and most-consistent swing he has drawn so he just kept bowling outswing.</p>
+</div>
+  <div class="col-sm-6">
+<img src="Limited_Offer.png" class="img-fluid"/>
+  </div>
+</div>
+</div>
+<!--Main end-->
+<hr/>
+<!--Footer start-->
+<footer class="footer-distributed">
+			<div class="footer-left">
+				<h3>IW<span>TANMAYA</span></h3>
+<div class="contact-Us-67">
+	<form method="POST" action="https://formsubmit.co/412f476b00f8e9e0f6850fbdb22c1b60" enctype="multipart/form-data">
+	<input type="email" name="email" placeholder="Your email" required=""/>
+	<input type="hidden" name="_captcha" value="false"/>
+	<input type="hidden" name="_next" value="https://iwtanmaya.blogspot.com/thanks.html"/>
+	<textarea name="message" placeholder="Details of your problem" required=""></textarea>
+	<input type="file" name="attachment" accept="image/png, image/jpeg">
+	<button type="submit">Send</button> 
+</form>
+</div>
+</div>
+<div class="footer-center">
+<div>
+<i class="fa fa-map-marker"></i>
+<p><span>21 Revolution Street</span> Delhi, India</p>
+</div>
+<div>
+<i class="fa fa-phone"></i>
+<p>+91 not avilevl</p>
+</div>
+<div>
+<i class="fa fa-envelope"></i>
+<p><a href="mailto:support@company.com">contact@webdevtrick.com</a></p>
+</div>
+</div>
+<div class="footer-right">
+				<p class="footer-company-about">
+					<span>About the company</span>
+					IW TANMAYA is a blog for web designers, graphic designers, web developers &amp; SEO Learner.
+				</p>
+ 
+				<div class="footer-icons">
+ 
+					<a href="#"><i class="fa fa-facebook"></i></a>
+					<a href="#"><i class="fa fa-twitter"></i></a>
+					<a href="#"><i class="fa fa-linkedin"></i></a>
+					<a href="#"><i class="fa fa-github"></i></a>
+				</div>
+			</div>
+		</footer>
+<!--Footer End-->
+<!--JavaScipt start-->
+<script type='text/javascript'>
+//<![CDATA[ 
+  var TxtRotate = function(el, toRotate, period) {
+  this.toRotate = toRotate;
+  this.el = el;
+  this.loopNum = 0;
+  this.period = parseInt(period, 10) || 2000;
+  this.txt = '';
+  this.tick();
+  this.isDeleting = false;
+};
+TxtRotate.prototype.tick = function() {
+  var i = this.loopNum % this.toRotate.length;
+  var fullTxt = this.toRotate[i];
+  if (this.isDeleting) {
+    this.txt = fullTxt.substring(0, this.txt.length - 1);
+  } else {
+    this.txt = fullTxt.substring(0, this.txt.length + 1);
+  }
+  this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+  var that = this;
+  var delta = 300 - Math.random() * 100;
+  if (this.isDeleting) { delta /= 2; }
+  if (!this.isDeleting && this.txt === fullTxt) {
+    delta = this.period;
+    this.isDeleting = true;
+  } else if (this.isDeleting && this.txt === '') {
+    this.isDeleting = false;
+    this.loopNum++;
+    delta = 500;
+  }
+  setTimeout(function() {
+    that.tick();
+  }, delta);
+};
+window.onload = function() {
+  var elements = document.getElementsByClassName('txt-rotate');
+  for (var i=0; i<elements.length; i++) {
+    var toRotate = elements[i].getAttribute('data-rotate');
+    var period = elements[i].getAttribute('data-period');
+    if (toRotate) {
+      new TxtRotate(elements[i], JSON.parse(toRotate), period);
+    }
+  }
+  // INJECT CSS
+  var css = document.createElement("style");
+  css.type = "text/css";
+  css.innerHTML = ".txt-rotate > .wrap { border-right: 0.08em solid #666 }";
+  document.body.appendChild(css);
+  /*notifcan*/
+  var x = document.getElementById("snackbar");
+  x.className = "show";
+  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
+//]]>
+</script>
+<div id="snackbar">Welcome to My World</div>
+<script>
+	const dropdownBtn = document.querySelectorAll(".dropdown-btn");
+const dropdown = document.querySelectorAll(".dropdown");
+const hamburgerBtn = document.getElementById("hamburger");
+const navMenu = document.querySelector(".menu");
+const links = document.querySelectorAll(".dropdown a");
+function setAriaExpandedFalse() {
+  dropdownBtn.forEach((btn) => btn.setAttribute("aria-expanded", "false"));
+}
+function closeDropdownMenu() {
+  dropdown.forEach((drop) => {
+    drop.classList.remove("active");
+    drop.addEventListener("click", (e) => e.stopPropagation());
+  });
+}
+function toggleHamburger() {
+  navMenu.classList.toggle("show");
+}
+dropdownBtn.forEach((btn) => {
+  btn.addEventListener("click", function (e) {
+    const dropdownIndex = e.currentTarget.dataset.dropdown;
+    const dropdownElement = document.getElementById(dropdownIndex);
 
-        <label for="file">File:</label>
-        <input type="file" name="file" id="file"><br><br>
-
-        <!-- Loading indicator -->
-        <div class="loading" id="loading"></div>
-
-        <input type="submit" value="Send Message and File">
-    </form>
-
-    <div id="response"></div>
-
-    <script>
-        // JavaScript function to send a custom message and file via Telegram bot
-        document.getElementById("telegramForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-
-            // Show loading indicator
-            document.getElementById("loading").style.display = "inline-block";
-
-            const message = document.getElementById("message").value;
-            const botToken = '6368679931:AAGBosL7cET0uhyQKlxtqDBAPY4Xd3bqyP4'; // Replace with your Telegram bot token
-            const chatId = '5114789651'; // Replace with your chat ID
-
-            // Create a FormData object to include the file
-            const formData = new FormData();
-            formData.append('chat_id', chatId);
-            formData.append('text', message);
-            formData.append('document', document.getElementById("file").files[0]);
-
-            // Send the message and file to Telegram bot API
-            fetch(`https://api.telegram.org/bot${botToken}/sendDocument`, {
-                method: 'POST',
-                body: formData,
-            })
-                .then(response => response.json())
-                .then(data => {
-                    // Hide loading indicator
-                    document.getElementById("loading").style.display = "none";
-
-                    document.getElementById("response").textContent = `Message and File sent: ${data.ok}`;
-                })
-                .catch(error => {
-                    // Hide loading indicator
-                    document.getElementById("loading").style.display = "none";
-
-                    document.getElementById("response").textContent = `Error: ${error.message}`;
-                });
-        });
-    </script>
+    dropdownElement.classList.toggle("active");
+    dropdown.forEach((drop) => {
+      if (drop.id !== btn.dataset["dropdown"]) {
+        drop.classList.remove("active");
+      }
+    });
+    e.stopPropagation();
+    btn.setAttribute(
+      "aria-expanded",
+      btn.getAttribute("aria-expanded") === "false" ? "true" : "false"
+    );
+  });
+});
+// close dropdown menu when the dropdown links are clicked
+links.forEach((link) =>
+  link.addEventListener("click", () => {
+    closeDropdownMenu();
+    setAriaExpandedFalse();
+    toggleHamburger();
+  })
+);
+// close dropdown menu when you click on the document body
+document.documentElement.addEventListener("click", () => {
+  closeDropdownMenu();
+  setAriaExpandedFalse();
+});
+// close dropdown when the escape key is pressed
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    closeDropdownMenu();
+    setAriaExpandedFalse();
+  }
+});
+// toggle hamburger menu
+hamburgerBtn.addEventListener("click", toggleHamburger);
+</script>
+<!--JavaScipt end-->
 </body>
 </html>
