@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phone Number Authentication</title>
+    <!-- Include Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+<style>
+	/*  Authenticate with Firebase with a Phone Number Using JavaScript */
+</style>
+</head>
+<body>
+    <h2>Phone Number Authentication</h2>
+    
+    <!-- Phone Number Input -->
+    <div>
+        <label for="phoneNumber">Enter Phone Number:</label>
+        <input type="text" id="phoneNumber" placeholder="+1234567890" value="+91" required>
+    </div>
+    
+    <!-- Recaptcha Container (optional) -->
+    <div id="recaptcha-container"></div>
+    
+    <!-- Send OTP Button -->
+    <button id="sendOTP">Send OTP</button>
+    
+    <!-- OTP Input -->
+    <div>
+        <label for="otp">Enter OTP:</label>
+        <input type="text" id="otp" required>
+    </div>
+    <!-- Verify OTP Button -->
+    <button id="verifyOTP">Verify OTP</button>
+    <!-- Display User Info -->
+    <div id="userInfo"></div>
+    <!-- Firebase Configuration -->
+    <script>
+        var firebaseConfig = {
+    apiKey: "AIzaSyBtW_K8JN06fchs9FPDeXJrDl-_zl1rknM",
+    authDomain: "test-f22f5.firebaseapp.com",
+    projectId: "test-f22f5",
+    storageBucket: "test-f22f5.appspot.com",
+    messagingSenderId: "632345110243",
+    appId: "1:632345110243:android:df7f073eec7c83b9a307d6"
+  };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        // Initialize reCAPTCHA (optional)
+        var appVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+        // Send OTP Button Click Event
+        document.getElementById('sendOTP').addEventListener('click', function () {
+            var phoneNumber = document.getElementById('phoneNumber').value;
+            firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+                .then(function (confirmationResult) {
+                    // OTP sent successfully
+                    alert("OTP sent to your phone!");
+                    window.confirmationResult = confirmationResult;
+                })
+                .catch(function (error) {
+                    // Handle errors here
+                    console.error("Error sending OTP:", error);
+                });
+        });
+        // Verify OTP Button Click Event
+     /*   document.getElementById('verifyOTP').addEventListener('click', function () {
+            var code = document.getElementById('otp').value;
+            confirmationResult.confirm(code)
+                .then(function (result) {
+                    // Phone number successfully authenticated
+                    var user = result.user;
+                    document.getElementById('userInfo').innerText = "Phone number authenticated: " + user.phoneNumber;
+                })
+                .catch(function (error) {
+                    // Handle errors here
+                    console.error("Error verifying OTP:", error);
+                });
+        });*/
+ /* url */
+// Verify OTP Button Click Event
+document.getElementById('verifyOTP').addEventListener('click', function () {
+    var code = document.getElementById('otp').value;
+    confirmationResult.confirm(code)
+        .then(function (result) {
+            // Phone number successfully authenticated
+            var user = result.user;
+            document.getElementById('userInfo').innerText = "Phone number authenticated: " + user.phoneNumber;
+
+            // Redirect to a URL after successful authentication
+            window.location.href = 'https://example.com/success'; // Replace with your desired URL
+        })
+        .catch(function (error) {
+            // Handle errors here
+            console.error("Error verifying OTP:", error);
+        });
+});
+
+    </script>
+</body>
+</html>
