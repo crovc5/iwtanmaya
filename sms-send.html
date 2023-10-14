@@ -1,99 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Phone Number Authentication</title>
-    <!-- Include Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
-<style>
-	/*  Authenticate with Firebase with a Phone Number Using JavaScript */
-</style>
+  <title>Real-Time Voice Call</title>
 </head>
 <body>
-    <h2>Phone Number Authentication</h2>
-    
-    <!-- Phone Number Input -->
-    <div>
-        <label for="phoneNumber">Enter Phone Number:</label>
-        <input type="text" id="phoneNumber" placeholder="+1234567890" value="+91" required>
-    </div>
-    
-    <!-- Recaptcha Container (optional) -->
-    <div id="recaptcha-container"></div>
-    
-    <!-- Send OTP Button -->
-    <button id="sendOTP">Send OTP</button>
-    
-    <!-- OTP Input -->
-    <div>
-        <label for="otp">Enter OTP:</label>
-        <input type="text" id="otp" required>
-    </div>
-    <!-- Verify OTP Button -->
-    <button id="verifyOTP">Verify OTP</button>
-    <!-- Display User Info -->
-    <div id="userInfo"></div>
-    <!-- Firebase Configuration -->
-    <script>
-        var firebaseConfig = {
-    apiKey: "AIzaSyBtW_K8JN06fchs9FPDeXJrDl-_zl1rknM",
-    authDomain: "test-f22f5.firebaseapp.com",
-    projectId: "test-f22f5",
-    storageBucket: "test-f22f5.appspot.com",
-    messagingSenderId: "632345110243",
-    appId: "1:632345110243:android:df7f073eec7c83b9a307d6"
-  };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        // Initialize reCAPTCHA (optional)
-        var appVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
-        // Send OTP Button Click Event
-        document.getElementById('sendOTP').addEventListener('click', function () {
-            var phoneNumber = document.getElementById('phoneNumber').value;
-            firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
-                .then(function (confirmationResult) {
-                    // OTP sent successfully
-                    alert("OTP sent to your phone!");
-                    window.confirmationResult = confirmationResult;
-                })
-                .catch(function (error) {
-                    // Handle errors here
-                    console.error("Error sending OTP:", error);
-                });
-        });
-        // Verify OTP Button Click Event
-     /*   document.getElementById('verifyOTP').addEventListener('click', function () {
-            var code = document.getElementById('otp').value;
-            confirmationResult.confirm(code)
-                .then(function (result) {
-                    // Phone number successfully authenticated
-                    var user = result.user;
-                    document.getElementById('userInfo').innerText = "Phone number authenticated: " + user.phoneNumber;
-                })
-                .catch(function (error) {
-                    // Handle errors here
-                    console.error("Error verifying OTP:", error);
-                });
-        });*/
- /* url */
-// Verify OTP Button Click Event
-document.getElementById('verifyOTP').addEventListener('click', function () {
-    var code = document.getElementById('otp').value;
-    confirmationResult.confirm(code)
-        .then(function (result) {
-            // Phone number successfully authenticated
-            var user = result.user;
-            document.getElementById('userInfo').innerText = "Phone number authenticated: " + user.phoneNumber;
+  <h1>Real-Time Voice Call</h1>
+  
+  <button id="startCall">Start Call</button>
+  <button id="endCall">End Call</button>
+  
+  <div id="localVideoContainer">
+    <video id="localVideo" autoplay playsinline muted></video>
+  </div>
+  
+  <div id="remoteVideoContainer">
+    <video id="remoteVideo" autoplay playsinline></video>
+  </div>
 
-            // Redirect to a URL after successful authentication
-            window.location.href = 'https://example.com/success'; // Replace with your desired URL
-        })
-        .catch(function (error) {
-            // Handle errors here
-            console.error("Error verifying OTP:", error);
-        });
-});
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-database.js"></script>
+  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 
-    </script>
+  <script>
+    // Initialize Firebase with your Firebase project configuration here.
+var firebaseConfig = {
+	apiKey: "AIzaSyDnoT8_7ZXNCA_UAer0MWQODeztvIDsR-E",
+  authDomain: "test-f22f5.firebaseapp.com",
+  databaseURL: "https://test-f22f5-default-rtdb.firebaseio.com",
+  projectId: "test-f22f5",
+  storageBucket: "test-f22f5.appspot.com",
+  messagingSenderId: "632345110243",
+  appId: "1:632345110243:web:7df24bc2c12ce202a307d6",
+ };
+ firebase.initializeApp(firebaseConfig);
+    const startCallButton = document.getElementById('startCall');
+    const endCallButton = document.getElementById('endCall');
+    const localVideo = document.getElementById('localVideo');
+    const remoteVideo = document.getElementById('remoteVideo');
+    
+    const configuration = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] };
+    const peerConnection = new RTCPeerConnection(configuration);
+
+    // Start the call
+    startCallButton.addEventListener('click', async () => {
+      const localStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+      localVideo.srcObject = localStream;
+
+      localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
+      
+      // TODO: Firebase signaling to notify the other user and initiate the call.
+    });
+
+    // End the call
+    endCallButton.addEventListener('click', () => {
+      // Close the peer connection and release media resources.
+      peerConnection.close();
+      localVideo.srcObject = null;
+      remoteVideo.srcObject = null;
+
+      // TODO: Firebase signaling to signal the end of the call.
+    });
+
+    // Handle incoming call signaling from Firebase and establish the connection.
+
+  </script>
 </body>
 </html>
