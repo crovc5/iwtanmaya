@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Multiple Website Loader</title>
+</head>
+<body onload="loadWebsites()">
+
+    <script>
+        // URLs of the websites you want to open
+        const urls = [
+            'https://iwtanmaya.github.io/app/test',
+            'https://iwtanmaya.github.io/app/test',
+            'https://iwtanmaya.github.io/app/test',
+            'https://iwtanmaya.github.io/app/test',
+            'https://iwtanmaya.github.io/app/test',
+            // Add more URLs as needed
+        ];
+
+        // Function to open a website and manipulate its body content
+        function openAndManipulate(url) {
+            const newWindow = window.open(url);
+            if (newWindow) {
+                newWindow.onload = function () {
+                    // Access the document and body of the opened page
+                    const pageDocument = newWindow.document;
+                    const pageBody = pageDocument.body;
+
+                    // Perform your manipulations here, for example:
+                    pageBody.style.backgroundColor = 'lightblue';
+                };
+            }
+        }
+
+        // Function to load websites when the page loads
+        function loadWebsites() {
+            // Open and manipulate each website
+            urls.forEach((url) => {
+                openAndManipulate(url);
+            });
+        }
+    </script>
+</body>
+</html>
