@@ -1,0 +1,56 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    transform: rotate(-45deg);
+}
+
+.heart {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    animation: pulse 1s infinite, glow 1.5s infinite alternate;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
+}
+
+.heart::before,
+.heart::after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    border-radius: 50%;
+}
+
+.heart::before {
+    top: -50px;
+    left: 0;
+}
+
+.heart::after {
+    left: 50px;
+    top: 0;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
+    }
+    100% {
+        box-shadow: 0 0 30px rgba(255, 0, 0, 1);
+    }
+}
