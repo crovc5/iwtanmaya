@@ -252,106 +252,135 @@
     </div>
 
     <script>
-        // JavaScript to handle form submission and display the message box
+        // JavaScript to handle form submission, code generation, and data saving to SheetDB with Indian Standard Time (IST)
         document.getElementById('userForm').addEventListener('submit', function (event) {
             event.preventDefault(); // Prevent default form submission
-
+    
             const name = document.getElementById('userName').value.trim();
             const phone = document.getElementById('phoneNumber').value.trim();
-
+    
+            // Validate input fields
             if (!name || !phone) {
                 alert('Please fill in all fields');
                 return;
             }
-
+    
+            // Validate Indian 10-digit phone number (starts with 6-9)
             if (!/^[6-9]\d{9}$/.test(phone)) {
                 alert('Please enter a valid 10-digit Indian phone number');
                 return;
             }
-
-            // Generate code logic
+    
+            // Generate code: first 4 letters of name (uppercase) + last 4 digits of phone
             const namePart = name.slice(0, 4).toUpperCase();
             const phonePart = phone.slice(-4);
             const generatedCode = `${namePart}${phonePart}`;
-
-            // Display the generated code
+    
+            // Update UI: hide the form container and display the message box with the generated code
             document.getElementById('formContainer').style.display = 'none';
             document.getElementById('messageBox').style.display = 'block';
             document.getElementById('generatedCode').textContent = generatedCode;
-
-            // Submit the form data to PHP
-            const formData = new FormData(this);
-            fetch('save_data.php', {
+    
+            // Get current IST formatted as "day/month/year hour:minute:second"
+            const currentIndianTime = new Date().toLocaleString('en-GB', {
+                timeZone: 'Asia/Kolkata',
+                hour12: false,
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            }).replace(',', ''); // Remove comma between date and time if present
+    
+            // Prepare the data payload to send to SheetDB
+            const dataToSend = {
+                data: [{
+                    name: name,
+                    phone: phone,
+                    currentDateTime: currentIndianTime, // IST in day/month/year hour:minute:second format
+                    generatedCode: generatedCode
+                }]
+            };
+    
+            // Send the data to SheetDB using a POST request
+            fetch('https://sheetdb.io/api/v1/ke8jgx3r63zrv', {
                 method: 'POST',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dataToSend)
             })
-            .then(response => response.text())
+            .then(response => response.json())
             .then(data => {
-                console.log(data); // Log the response from PHP
+                console.log('Data saved successfully:', data);
             })
             .catch(error => {
-                console.error('Error:', error);
+                console.error('Error saving data:', error);
             });
         });
-
+    
+        // Optional: Function to show additional instructions
         function showInstructions() {
             const instructions = document.getElementById('instructions');
             instructions.style.display = 'block';
         }
-
+    
+        // Function to create and download a custom image with the generated code and messages
         function downloadImage() {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
-
+    
             // Set canvas size
             canvas.width = 800;
             canvas.height = 600;
-
-            // Background color
+    
+            // Draw white background
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-
+    
             // Add brand name
             ctx.fillStyle = '#1e40af';
-            ctx.font = 'bold 60px Playfair Display';
+            ctx.font = 'bold 60px "Playfair Display", serif';
             ctx.textAlign = 'center';
             ctx.fillText('ZXIROX', canvas.width / 2, 100);
-
+    
             // Add congratulatory message
             ctx.fillStyle = '#2563eb';
             ctx.font = 'bold 30px Arial';
-            ctx.textAlign = 'center';
             ctx.fillText(`🎉 Congratulations, ${document.getElementById('userName').value.trim()}! 🎉`, canvas.width / 2, 200);
-
+    
             // Add team message
             ctx.fillStyle = '#2c3e50';
             ctx.font = 'bold 20px Arial';
             ctx.fillText('A special surprise for you from Team Zxirox Photography! 📸✨', canvas.width / 2, 250);
-
+    
             // Add generated code
             ctx.fillStyle = '#3b82f6';
             ctx.font = 'bold 50px Arial';
             ctx.fillText(document.getElementById('generatedCode').textContent, canvas.width / 2, 350);
-
-            // Add instructions
+    
+            // Add instructions text
             ctx.fillStyle = '#2c3e50';
             ctx.font = '20px Arial';
             ctx.textAlign = 'left';
-            const instructions = [
+            const instructionLines = [
                 '1️⃣ Download the image and mention @zxirox on your Instagram Story with the code Zxirox 24.',
                 '2️⃣ We will reply and send you the code.',
                 '⏳ Offer valid for 72 hours only! T&C Apply.'
             ];
-            instructions.forEach((line, index) => {
+            instructionLines.forEach((line, index) => {
                 ctx.fillText(line, 50, 400 + index * 30);
             });
-
-            // Create download link
+    
+            // Create a download link for the generated image
             const link = document.createElement('a');
             link.download = `Redmi_Code_${document.getElementById('generatedCode').textContent}.png`;
             link.href = canvas.toDataURL('image/png');
             link.click();
         }
     </script>
+    
+    
 </body>
 </html>
